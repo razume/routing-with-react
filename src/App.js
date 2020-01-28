@@ -23,7 +23,7 @@ function App() {
   const API = "https://acme-users-api-rev.herokuapp.com";
 
   useEffect(()=> {
-    axios.get(`${API}/api/users`).then(response => {
+    axios.get(`${API}/api/users/`).then(response => {
       console.log(response)
       const currentUsers = response.data.users
       const currentData = response.data
@@ -33,12 +33,23 @@ function App() {
   }, [])
 
 
+  const clicked = (pageNum) => {
+    axios.get(`${API}/api/users/${pageNum-1}`).then(response => {
+      console.log(response)
+      const currentUsers = response.data.users
+      const currentData = response.data
+      setUsers(currentUsers)
+      setData(currentData)
+    })
+  }
+
+
   return (
     <div>
       <Nav />
       {params.view === undefined && <Home />}
+      <Pager  clicked={clicked} data={data}/> 
       {params.view === 'users' && <Users users={users} />}
-      <Pager data={data}/>
     </div>
   );
 }

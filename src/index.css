@@ -18,3 +18,12 @@ code {
   justify-content: space-evenly;
 }
 
+.pageList {
+  display: flex;
+  flex-direction: row;
+  justify-content: center
+}
+
+.pageList > p {
+  margin: 4px;
+}
