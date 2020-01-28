@@ -1,9 +1,22 @@
-import React from "react";
+import React from 'react';
 
-export default function Pager({data}) {
+export default function Pager({ data }) {
+  const numOfPages = Math.ceil(data.count / 50);
+  const pageList = [];
+  for (let i = 1; i < numOfPages; i++) {
+    pageList.push(i);
+  }
+
   return (
     <div>
-    {data.count / 50}
+      {pageList.map(page => {
+        return (
+          <p>
+            <a href={'#view=users&idx=' + page}>{page}</a>
+          </p>
+        );
+      })}
     </div>
   );
 }
+//<a href=`#view=users&idx=${page}`></a>
