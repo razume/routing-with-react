@@ -1,24 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import Nav from './components/Nav';
+import Home from './components/Home';
+import Users from './components/Users';
+import { getHash } from './utils/utils';
+import qs from 'qs';
 import './App.css';
 
 function App() {
+  const [params, setParams] = useState(qs.parse(getHash()));
+  useEffect(() => {
+    window.addEventListener('hashchange', () => {
+      setParams(qs.parse(getHash()));
+    });
+    setParams(qs.parse(getHash()));
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Nav />
+      {params.view === undefined && <Home />}
+      {params.view === 'users' && <Users />}
     </div>
   );
 }
